@@ -9,16 +9,26 @@
 <script type="text/babel">
   const root = document.getElementById("root");
   function App () {
-    const [counter, setCounter] = React.useState(0);// Array가 생김. undefined 값과 function -> undefined(data값) , function (data값을 변경할 함수)
-    // 리엑트는 자동적으로 리렌더링된다.
-    const onClick = () => {
-      // setCounter(counter *1); -> 직접 값 설정
-      setCounter((current) => current +1); // 함수로 전달 (현재 state값이용하여 다음 state값) -> more safe
-    };
+
+    const [minutes, setMinutes]= React.useState();
+    const onChange = (event) => {
+      //console.log(event.target.value); JS에서 처럼 event.target.value를 이용해서 value값을 가져올수 있다.
+      setMinutes(event.target.value);
+    }; 
     return (
       <div>
-       <h3>Total clicks: {counter}</h3>
-       <button onClick={onClick}>Click me</button>
+       <h1>Super Converter</h1>
+       <label for="minutes">Minutes</label>
+       <input
+           value={minutes} 
+           id="minutes" 
+           placeholder="Minutes" 
+           type="number"
+           onChange={onChange} // input에 변화가 생기면 onChange함수 실행
+           />
+       <h4>You want to convert {minutes}</h4>
+       <label for="hours">Hours</label>
+       <input id="hours" placeholder="Hours" type="number"/>
     </div>
   )};
  ReactDOM.render(<App />, root);                
