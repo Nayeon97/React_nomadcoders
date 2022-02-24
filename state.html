@@ -8,20 +8,16 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
   const root = document.getElementById("root");
-  let counter = 0;
-  function countUP(){
-    counter = counter + 1; // 값이 바뀔때마다
-    render() // 렌더링함.
-  }
-  function render(){
-    ReactDOM.render(<Container />, root); // 0 -> 1 -> 2 Container을 다시 랜더링 
-  }
-  const Container = () => (
-    <div>
-       <h3>Total clicks: {counter}</h3>
-       <button onClick={countUP}>Click me</button>
+  function App () {
+    const [counter, modifier] = React.useState(0);// Array가 생김. undefined 값과 function -> undefined(data값) , function (data값을 변경할 함수)
+    // const a = data[0]
+    // const b = data[1]
+    return (
+      <div>
+       <h3>Total clicks: 0</h3>
+       <button>Click me</button>
     </div>
-  );
-render();
+  )};
+ ReactDOM.render(<App />, root);
 </script>
 </html>
