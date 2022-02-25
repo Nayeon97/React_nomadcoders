@@ -9,27 +9,29 @@
 <script type="text/babel">
   // Props : 부모 컴포넌트로부터 자식 컴포넌트에 데이터를 보낼 수 있게 하는 방법!
   
-  function Btn({Btn_title, big}){ 
+  function Btn({Btn_title, text}){ 
     // 재사용가능하다! 예를들어 버튼의 바탕색을 바꿔야한다면, 하나하나 바꿔주는 것이 아니라, Btn 함수의 바탕색만 바꿔주면 해결!
-     return <button 
+     return <button
+     onClick={text} // text의 값이 changeValue 이기 때문에! -> onClick 하면, changeValue 함수 실행된다!
      style={{
        backgroundColor: "tomato",
        color: "white",
        padding: "10px 20px",
        border: 0,
        borderRadius: 10,
-       fontSize: big ? 18 : 16,
      }}
      >
      {Btn_title}
      </button>
   }
  
-  // Btn_title 를 Btn에 전송! 
+  // Btn_title 를 Btn에 전송!  onClick 는 자식 컴포넌트에 전달하는 데이터다! 이벤트리스너 아님.
   function App() {
+      const [value, setValue] = React.useState("Save Changes");
+      const changeValue = () => setValue ("Revert Changes")
       return (
         <div>
-          <Btn Btn_title="Save Changes" big={true}/>
+          <Btn Btn_title={value} text={changeValue}/> 
           <Btn Btn_title="Continue" big={false}/>
         </div>
       );
