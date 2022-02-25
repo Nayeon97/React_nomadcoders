@@ -4,12 +4,14 @@
   <div id="root"></div>
 </body>
 <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- prop 타입이 무엇인지 알려준다. -->
+<script sre="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script> 
 <script type="text/babel">
   // Props : 부모 컴포넌트로부터 자식 컴포넌트에 데이터를 보낼 수 있게 하는 방법!
   
-  function Btn({Btn_title, text}){ 
+  function Btn({text, fontSize = 12}){ //만약에 fontSize를 지정해주지 않았다면, 12로 설정된다 
     // 재사용가능하다! 예를들어 버튼의 바탕색을 바꿔야한다면, 하나하나 바꿔주는 것이 아니라, Btn 함수의 바탕색만 바꿔주면 해결!
      return <button
      onClick={text} // text의 값이 changeValue 이기 때문에! -> onClick 하면, changeValue 함수 실행된다!
@@ -19,28 +21,26 @@
        padding: "10px 20px",
        border: 0,
        borderRadius: 10,
+       fontSize,
      }}
      >
-     {Btn_title}
+     {text}
      </button>
   }
- 
-  const MemorizedBtn = React.memo(Btn);
-  // 만약 부모에서 어떤 state라도 변경이 있으면 -> 모든 자식들이 다시 렌더링된다! -> 컴포넌트가 많아지면, 성능이 안 좋아질수 있는 원인이 될수 있다!
-  // React.memo를 사용하면,  컴포넌트가 동일한 props로 동일한 결과를 렌더링 한다면, React.memo를 호출! -> 결과를 Memoizing. (즉 Memoizing 된 내용을 재사용함)
+  
+  Btn.propTypes = {
+     text: propTypes.string,
+     // text: propTypes.string.isRequired -> 필수적으로 값이 있어야한다! 
+     fontSize: propTypes.number,
+  }; // propTypes을 설정해서, 잘못 적었을때는 에러를 발생한다!
 
-  // Btn_title 를 Btn에 전송!  onClick 는 자식 컴포넌트에 전달하는 데이터다! 이벤트리스너 아님.
   function App() {
-      const [value, setValue] = React.useState("Save Changes");
-      const changeValue = () => setValue ("Revert Changes")
       return (
         <div>
-          <MemorizedBtnn Btn_title={value} text={changeValue}/> 
-          <MemorizedBtn Btn_title="Continue" big={false}/>
+          <Btn text="Save Changes" fontSize={18}/>
         </div>
       );
     }
     const root = document.getElementById("root");
-    ReactDOM.render(<App />, root);
   </script>
 </html>
