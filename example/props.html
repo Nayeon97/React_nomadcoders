@@ -25,14 +25,18 @@
      </button>
   }
  
+  const MemorizedBtn = React.memo(Btn);
+  // 만약 부모에서 어떤 state라도 변경이 있으면 -> 모든 자식들이 다시 렌더링된다! -> 컴포넌트가 많아지면, 성능이 안 좋아질수 있는 원인이 될수 있다!
+  // React.memo를 사용하면,  컴포넌트가 동일한 props로 동일한 결과를 렌더링 한다면, React.memo를 호출! -> 결과를 Memoizing. (즉 Memoizing 된 내용을 재사용함)
+
   // Btn_title 를 Btn에 전송!  onClick 는 자식 컴포넌트에 전달하는 데이터다! 이벤트리스너 아님.
   function App() {
       const [value, setValue] = React.useState("Save Changes");
       const changeValue = () => setValue ("Revert Changes")
       return (
         <div>
-          <Btn Btn_title={value} text={changeValue}/> 
-          <Btn Btn_title="Continue" big={false}/>
+          <MemorizedBtnn Btn_title={value} text={changeValue}/> 
+          <MemorizedBtn Btn_title="Continue" big={false}/>
         </div>
       );
     }
