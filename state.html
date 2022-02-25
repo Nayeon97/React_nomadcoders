@@ -10,25 +10,43 @@
   const root = document.getElementById("root");
   function App () {
 
-    const [minutes, setMinutes]= React.useState();
+    const [amount, setAmount]= React.useState(0);
+    const [inverted, setFlipped] = React.useState(false) // 초기값이 false! 
     const onChange = (event) => {
       //console.log(event.target.value); JS에서 처럼 event.target.value를 이용해서 value값을 가져올수 있다.
-      setMinutes(event.target.value);
+      setAmount(event.target.value);
     }; 
+    const reset = () => setAmount(0);
+    const onFlip = () => {
+      reset();
+      setFlipped((current) => !current ); // flipped값을 반대로
+    }
     return (
       <div>
        <h1>Super Converter</h1>
        <label for="minutes">Minutes</label>
        <input
-           value={minutes} 
+           value={inverted ? amount*60 : amount} 
            id="minutes" 
            placeholder="Minutes" 
            type="number"
            onChange={onChange} // input에 변화가 생기면 onChange함수 실행
+           disabled={inverted}
            />
-       <h4>You want to convert {minutes}</h4>
+       <h4>You want to convert {amount}</h4>
        <label for="hours">Hours</label>
-       <input id="hours" placeholder="Hours" type="number"/>
+       <input 
+          value={inverted?amount:Math.round(amount/60)}
+          id="hours" 
+          placeholder="Hours" 
+          type="number"
+          disabled = {!inverted}
+          onChange = {onChange}
+       />
+       <button onClick={reset}>Reset</button>
+       <button onClick={onFlip}>
+        {inverted ? "Turn back" : "Invert"}
+        </button>
     </div>
   )};
  ReactDOM.render(<App />, root);                
